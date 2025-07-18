@@ -69,11 +69,11 @@ Ensure the following files are present:
 ### 3. Set paths in the script
 
 At the top of wildfire_exposure_v01.py, point to your directories:
-
+```
 ROOT_DIR = Path("/your/project/Data")
 BASE_DIR = Path("/your/project")
 OUTPUT_DIR = BASE_DIR / "Outputs"
-
+```
 ### 4. Run the script
 
 python wildfire_exposure_v01.py
