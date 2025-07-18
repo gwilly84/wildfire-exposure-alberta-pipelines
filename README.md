@@ -25,15 +25,19 @@ This project uses publicly available geospatial data from Canadian government so
 
 ---
 
-## 🚀 What This Script Does
+## 🚀 What This Script Does (v0.2)
 
 - Buffers pipeline geometries by 500 meters
-- Calculates average wildfire burn frequency using raster data
-- Flags whether each segment was ever exposed to wildfire
-- Normalizes the burn score from 0 to 1
-- Produces:
-  - A `.geojson` file with pipeline wildfire exposure stats
-  - A `.png` map showing exposure levels by color gradient
+- Uses **chunked zonal statistics** (10,000 rows per batch) for wildfire raster overlay
+- Calculates:
+  - `burn_mean`: average wildfire frequency per segment
+  - `burn_exposed`: binary flag if ever burned
+  - `burn_norm`: normalized 0–1 wildfire exposure
+- Outputs:
+  - A `.geojson` file with attributes
+  - A `.png` map for visualization
+
+*Note: this version processes large datasets in ~8 hours depending on your machine.*
 
 ---
 
@@ -44,6 +48,7 @@ This project uses publicly available geospatial data from Canadian government so
 ```bash
 pip install geopandas rasterio rasterstats matplotlib
 ```
+
 ### 2. Prepare your files
 
 Organize the files using this structure:
@@ -76,12 +81,17 @@ OUTPUT_DIR = BASE_DIR / "Outputs"
 ```
 ### 4. Run the script
 
-python wildfire_exposure_v01.py
+python wildfire_exposure_v02.py
 
 This generates
 
 - `pipeline_wildfire_exposure.geojson`
 - `wildfire_pipeline_map.png`
+
+🧠 Want to Help?
+
+If you're a GIS or Python performance nerd, I'd love to hear your tips for optimizing large-scale zonal stats workflows. This script averages ~15 minutes per chunk. Suggestions welcome!
+
 
 📄 License
 
